@@ -26,14 +26,10 @@ public class Circle extends Brush
             for (int j = 0; j < 2 * radius; j++)
             {
                 int x = x0 - radius + j;
-                if (!(y < 0 || y >= imageHeight || x < 0 || x >= imageWidth))
+                if ((j - radius) * (j - radius) + (i - radius) * (i - radius) < radius * radius)
                 {
-                    if ((j - radius) * (j - radius) + (i - radius) * (i - radius) < radius * radius)
-                    {
-                        drawPixel(x, y);
-                    }
+                    drawPixel(x, y);
                 }
-
             }
         }
     }
