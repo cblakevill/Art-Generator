@@ -30,7 +30,7 @@ public class Main
         String size = args[3];
         String colorEnhance = args[4];
 
-        JFrame frame = new JFrame(input + " - " + shape + " - " + iterations);;
+        JFrame frame = new JFrame(input + " - " + shape + " (" + size + ") - " + iterations + " iterations");
         Brush brush;
         ImageCanvas canvas;
         try
@@ -48,7 +48,6 @@ public class Main
         frame.setLayout(new BorderLayout());
         frame.setResizable(false);
         frame.setVisible(true);
-        frame.pack();
         frame.setLocationRelativeTo(null);
         frame.addWindowListener(new WindowAdapter()
         {

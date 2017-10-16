@@ -9,7 +9,6 @@ import java.awt.image.DataBufferInt;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -53,20 +52,17 @@ public class ImageCanvas extends Canvas
         this.initImage(file);
         this.loadColors(((DataBufferInt) srcImage.getRaster().getDataBuffer()).getData());
         this.setPreferredSize(new Dimension(windowWidth, windowHeight));
+        this.setMaximumSize(new Dimension(windowWidth, windowHeight));
+        this.setMinimumSize(new Dimension(windowWidth, windowHeight));
+        this.createBufferStrategy(1);
     }
 
     public void draw()
     {
-        this.setPreferredSize(new Dimension(windowWidth, windowHeight));
-        this.setMaximumSize(new Dimension(windowWidth, windowHeight));
-        this.setMinimumSize(new Dimension(windowWidth, windowHeight));
-        this.createBufferStrategy(1);
-
         brush.setDimensions(imageWidth, imageHeight);
-
-        Arrays.fill(((DataBufferInt)drawingImage.getRaster().getDataBuffer()).getData(), 0xffffff);
         brush.setSrc(((DataBufferInt)srcImage.getRaster().getDataBuffer()).getData());
         brush.setDrawing(((DataBufferInt)drawingImage.getRaster().getDataBuffer()).getData());
+
         Graphics g = getBufferStrategy().getDrawGraphics();
         int iter = 0;
         while (running && iter < iterations)
@@ -99,8 +95,9 @@ public class ImageCanvas extends Canvas
 
     public void freeze()
     {
+        running = true;
         Graphics g = getBufferStrategy().getDrawGraphics();
-        while (true)
+        while (running)
         {
             g.drawImage(drawingImage, 0, 0, windowWidth, windowHeight, null);
         }

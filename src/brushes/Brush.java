@@ -6,21 +6,21 @@ import java.util.*;
 
 public abstract class Brush
 {
-    protected List<Integer> colors;
     protected double[] cos;
     protected double[] sin;
     protected int imageWidth;
     protected int imageHeight;
     protected int size;
-    protected int[] src;
-    protected int[] pixelLocations;
     protected boolean colorEnhance;
 
+    private List<Integer> colors;
+    private Set<Integer> currentColorSet;
+    private int[] src;
     private int[] drawing;
+    private int[] pixelLocations;
     private int[] srcPixels;
     private int[] backupPixels;
     private int matchedPixels;
-    private Set<Integer> currentColorSet;
     private Random random;
 
     public Brush(int size, boolean colorEnhance)
@@ -140,7 +140,7 @@ public abstract class Brush
 
         Class<? extends Brush> brushClass = brushes.get(brushName);
 
-        Constructor<? extends Brush> cons = null;
+        Constructor<? extends Brush> cons;
         try
         {
             cons = brushClass.getConstructor(int.class, boolean.class);
@@ -184,5 +184,6 @@ public abstract class Brush
     public void setDrawing(int[] drawing)
     {
         this.drawing = drawing;
+        Arrays.fill(drawing, 0xffffff);
     }
 }
