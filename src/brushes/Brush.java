@@ -47,7 +47,7 @@ public abstract class Brush
         drawShape();
 
         int selectedColor;
-        if(colorEnhance)
+        if(colorEnhance && currentColorSet.size() > 0)
         {
             selectedColor = new ArrayList<>(currentColorSet).get(random.nextInt(currentColorSet.size()));
         }

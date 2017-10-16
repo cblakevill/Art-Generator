@@ -12,23 +12,23 @@ public class Main
 {
     public static void main(String[] args)
     {
+        if(args.length != 5)
+        {
+            System.out.println("Usage: <input> <brush type> <iterations> <size> <output dir> <enhanced coloring>");
+            System.out.println("input - image to process");
+            System.out.println("brush type - type of brush <line/circle/wavy>");
+            System.out.println("iterations - number of iterations to perform");
+            System.out.println("size - size of brush (line length/circle radius) in pixels");
+            System.out.println("enhanced coloring - more accurate coloring at the cost of processing time <true/false>");
+
+            System.exit(1);
+        }
+
         String input = args[0];
         String shape = args[1];
         String iterations = args[2];
         String size = args[3];
         String colorEnhance = args[4];
-
-        if(args.length != 5)
-        {
-            System.out.println("Usage: <input> <brush type> <iterations> <size> <output dir> <enhance drawPixel>");
-            System.out.println("input - image or directory of images to process");
-            System.out.println("brush type - type of brush <line/circle/wavy>");
-            System.out.println("iterations - number of iterations to perform (usually > 1 million)");
-            System.out.println("size - size of brush (line length/circle radius) in pixels");
-            System.out.println("enhance drawPixel - more accurate coloring at the cost of processing time <true/false>");
-
-            System.exit(1);
-        }
 
         JFrame frame = new JFrame(input + " - " + shape + " - " + iterations);;
         Brush brush;

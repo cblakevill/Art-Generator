@@ -64,7 +64,7 @@ public class ImageCanvas extends Canvas
 
         brush.setDimensions(imageWidth, imageHeight);
 
-        Arrays.fill(((DataBufferInt)drawingImage.getRaster().getDataBuffer()).getData(), 0x2d2d2d);
+        Arrays.fill(((DataBufferInt)drawingImage.getRaster().getDataBuffer()).getData(), 0xffffff);
         brush.setSrc(((DataBufferInt)srcImage.getRaster().getDataBuffer()).getData());
         brush.setDrawing(((DataBufferInt)drawingImage.getRaster().getDataBuffer()).getData());
         Graphics g = getBufferStrategy().getDrawGraphics();
