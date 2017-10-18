@@ -123,15 +123,14 @@ public class ImageCanvas extends Canvas
         windowWidth = imageWidth;
         windowHeight = imageHeight;
 
-        if(imageWidth > 1000 && imageWidth > imageHeight)
+        if (imageWidth > 1000 && imageWidth > imageHeight)
         {
             windowWidth = 1000;
-            windowHeight = (int)(((double) imageHeight / imageWidth)*1000);
-        }
-        else if(imageHeight > 1000 && imageHeight > imageWidth)
+            windowHeight = (int) (((double) imageHeight / imageWidth) * 1000);
+        } else if (imageHeight > 1000 && imageHeight > imageWidth)
         {
             windowHeight = 1000;
-            windowWidth = (int)(((double) imageWidth / imageHeight)*1000);
+            windowWidth = (int) (((double) imageWidth / imageHeight) * 1000);
         }
 
         srcImage = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_INT_RGB);

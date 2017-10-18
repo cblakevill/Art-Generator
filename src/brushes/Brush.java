@@ -14,19 +14,25 @@ public abstract class Brush
     protected boolean colorEnhance;
 
     private List<Integer> colors;
-    private Set<Integer> currentColorSet;
+    private int[] currentColors;
     private int[] src;
     private int[] drawing;
     private int[] pixelLocations;
     private int[] srcPixels;
-    private int[] backupPixels;
-    private int matchedPixels;
+    private int[] drawingPixels;
+    private int currentPixel;
     private Random random;
 
     public Brush(int size, boolean colorEnhance)
     {
         this.size = size;
         this.colorEnhance = colorEnhance;
+
+        this.currentColors = new int[pixelsPerDraw()];
+        this.pixelLocations = new int[pixelsPerDraw()];
+        this.srcPixels = new int[pixelsPerDraw()];
+        this.drawingPixels = new int[pixelsPerDraw()];
+
         this.random = new Random();
     }
 
@@ -36,20 +42,14 @@ public abstract class Brush
 
     public void draw()
     {
-        matchedPixels = 0;
-        pixelLocations = new int[pixelsPerDraw()];
-        srcPixels = new int[pixelsPerDraw()];
-        backupPixels = new int[pixelsPerDraw()];
-
-        if(colorEnhance)
-            currentColorSet = new HashSet<>(size);
+        currentPixel = 0;
 
         drawShape();
 
         int selectedColor;
-        if(colorEnhance && currentColorSet.size() > 0)
+        if(colorEnhance)
         {
-            selectedColor = new ArrayList<>(currentColorSet).get(random.nextInt(currentColorSet.size()));
+            selectedColor = currentColors[random.nextInt(size)];
         }
         else
         {
@@ -57,10 +57,10 @@ public abstract class Brush
         }
 
         int colorDistance1 = colorDistance(selectedColor, srcPixels);
-        int colorDistance2 = colorDistance(backupPixels, srcPixels);
+        int colorDistance2 = colorDistance(drawingPixels, srcPixels);
         if (colorDistance1 < colorDistance2)
         {
-            for (int i = 0; i < matchedPixels; i++)
+            for (int i = 0; i < currentPixel; i++)
             {
                 drawing[pixelLocations[i]] = selectedColor;
             }
@@ -71,20 +71,20 @@ public abstract class Brush
     {
         if (!(y < 0 || y >= imageHeight || x < 0 || x >= imageWidth))
         {
-            pixelLocations[matchedPixels] = y * imageWidth + x;
-            backupPixels[matchedPixels] = drawing[pixelLocations[matchedPixels]];
-            srcPixels[matchedPixels] = src[pixelLocations[matchedPixels]];
+            pixelLocations[currentPixel] = y * imageWidth + x;
+            drawingPixels[currentPixel] = drawing[pixelLocations[currentPixel]];
+            srcPixels[currentPixel] = src[pixelLocations[currentPixel]];
             if (colorEnhance)
-                currentColorSet.add(src[pixelLocations[matchedPixels]]);
+                currentColors[currentPixel] = src[pixelLocations[currentPixel]];
 
-            matchedPixels++;
+            currentPixel++;
         }
     }
 
     private int colorDistance(int[] color, int[] original)
     {
         double distance = 0;
-        for (int i = 0; i < matchedPixels; i++)
+        for (int i = 0; i < currentPixel; i++)
         {
             int r1 = (color[i] & 0xff0000) >> 16;
             int r0 = (original[i] & 0xff0000) >> 16;
@@ -105,7 +105,7 @@ public abstract class Brush
         int b1 = (color & 0x00ff00) >> 8;
         int g1 = (color & 0x0000ff);
 
-        for (int i = 0; i < matchedPixels; i++)
+        for (int i = 0; i < currentPixel; i++)
         {
             int r0 = (original[i] & 0xff0000) >> 16;
             int b0 = (original[i] & 0x00ff00) >> 8;
@@ -117,12 +117,12 @@ public abstract class Brush
 
     protected void initTrigTable()
     {
-        sin = new double[181];
-        cos = new double[181];
-        for(int i = 0; i <= 180; i++)
+        sin = new double[361];
+        cos = new double[361];
+        for(int i = 0; i <= 360; i++)
         {
-            sin[i] = Math.sin(i);
-            cos[i] = Math.cos(i);
+            sin[i] = Math.sin(i * Math.PI/180);
+            cos[i] = Math.cos(i * Math.PI/180);
         }
     }
 

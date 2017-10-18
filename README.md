@@ -12,7 +12,7 @@ The program uses the following arguments
 * brush type - type of brush (line, circle, or wavy)
 * iterations - number of iterations until the drawing is complete
 * size - size of brush (line length/circle radius) in pixels
-* enhanced coloring - more accurate coloring at the cost of processing time
+* enhanced coloring - more accurate coloring
 
 Example
 ```

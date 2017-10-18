@@ -5,20 +5,22 @@ import java.util.Random;
 public class Circle extends Brush
 {
     private int radius;
+    private int radiusSquared;
+    private Random random;
 
     public Circle(int radius, boolean colorEnhance)
     {
         super(radius, colorEnhance);
         this.radius = radius;
+        this.radiusSquared = radius * radius;
+        this.random = new Random();
     }
 
     @Override
     protected void drawShape()
     {
-        Random r = new Random();
-
-        int x0 = r.nextInt(imageWidth + 2 * radius) - radius;
-        int y0 = r.nextInt(imageHeight + 2 * radius) - radius;
+        int x0 = random.nextInt(imageWidth + 2 * radius) - radius;
+        int y0 = random.nextInt(imageHeight + 2 * radius) - radius;
 
         for (int i = 0; i < 2 * radius; i++)
         {
@@ -26,7 +28,7 @@ public class Circle extends Brush
             for (int j = 0; j < 2 * radius; j++)
             {
                 int x = x0 - radius + j;
-                if ((j - radius) * (j - radius) + (i - radius) * (i - radius) < radius * radius)
+                if ((j - radius) * (j - radius) + (i - radius) * (i - radius) < radiusSquared)
                 {
                     drawPixel(x, y);
                 }
@@ -38,7 +40,7 @@ public class Circle extends Brush
     @Override
     protected int pixelsPerDraw()
     {
-        return 4 * radius * radius;
+        return 4 * size * size;
     }
 
     @Override

@@ -4,6 +4,8 @@ import java.util.Random;
 
 public class Line extends Brush
 {
+    private Random random;
+
     public Line(int length, boolean colorEnhance)
     {
         super(length, colorEnhance);
@@ -12,15 +14,16 @@ public class Line extends Brush
         {
             initTrigTable();
         }
+
+        this.random = new Random();
     }
 
     @Override
     protected void drawShape()
     {
-        Random r = new Random();
-        int angle = r.nextInt(181);
-        int x0 = r.nextInt(imageWidth);
-        int y0 = r.nextInt(imageHeight);
+        int angle = random.nextInt(181);
+        int x0 = random.nextInt(imageWidth);
+        int y0 = random.nextInt(imageHeight);
 
 
         for (int i = 0; i < size; i++)

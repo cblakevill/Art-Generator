@@ -15,11 +15,12 @@ public class Main
         if(args.length != 5)
         {
             System.out.println("Usage: <input> <brush type> <iterations> <size> <output dir> <enhanced coloring>");
+            System.out.println();
             System.out.println("input - image to process");
             System.out.println("brush type - type of brush <line/circle/wavy>");
             System.out.println("iterations - number of iterations to perform");
             System.out.println("size - size of brush (line length/circle radius) in pixels");
-            System.out.println("enhanced coloring - more accurate coloring at the cost of processing time <true/false>");
+            System.out.println("enhanced coloring - more accurate coloring <true/false>");
 
             System.exit(1);
         }
